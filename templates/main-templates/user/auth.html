@@ -1,0 +1,16 @@
+{% load crispy_forms_tags %}
+<div class="card">
+    <form class="form-signin text-center" method="post">
+        {% csrf_token %}
+        <h2>{{ value }}</h2>
+        {{ form|crispy }}
+        <input type="submit" class="btn-my-custom btn-my-sm" value="{{ value }}">
+    </form>
+    {% if "login" in request.path %}
+        <p class="text-center">Hesabiniz yoxdursa <a href="{% url 'register' %}"><b>Qeydiyyatdan</b></a> keçin</p>
+    {% else %}
+        <p class="text-center">Hesabiniz varsa <a href="{% url 'login' %}"><b>Daxil</b></a> olun</p>
+    {% endif %}
+</div>
+
+

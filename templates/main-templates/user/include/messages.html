@@ -1,0 +1,120 @@
+{% extends 'main-templates/user/user-profile-base.html' %}
+
+{% block head_content %}
+    <script type="text/javascript" rel="script">
+        $(document).ready(function () {
+            $(".gedf-main").on("click", "#message-remove-btn", function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                var $msg_pk = $this.attr("value");
+                var $receiver = $this.attr("receiver");
+                var $url = $this.attr("href");
+                $.ajax({
+                    url: $url,
+                    dataType: "json",
+                    data: {"msg_pk": $msg_pk, "receiver": $receiver},
+                    success: function (data) {
+                        if (data.is_valid) {
+                            window.location.reload();
+                        }
+                    }
+                })
+            }).on("click", "#reply-btn", function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                var $url = $this.attr("href");
+                var $msg_pk = $this.attr("msg_pk");
+                var $reply_view = $this.closest("#single-msg-div").find("#message-reply-div");
+                $.ajax({
+                    url: $url,
+                    data: {"msg_pk": $msg_pk},
+                    success: function (data) {
+                        $this.remove();
+                        $reply_view.html(data.html);
+                    }
+                });
+            }).on("submit", "#reply-form", function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                var $type = $this.attr("method");
+                var $url = $this.attr("action");
+                var $data = $this.serialize();
+                var $li = $this.closest("#single-msg-div").find("li.card");
+                $.ajax({
+                    url: $url,
+                    type: $type,
+                    dataType: "json",
+                    data: $data,
+                    success: function (data) {
+                        window.location.reload();
+                    }
+                })
+            }).on("click", ".like-btn", function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                var $url = $this.attr("href");
+                var $like_count = $this.closest(".card-footer").find(".text-info");
+                var $like_btn = $this.closest(".card-footer").find("svg.like-icon");
+                $.ajax({
+                    url: $url,
+                    dataType: "json",
+                    success: function (data) {
+                        $like_count.html(data.like_count + " -nəfər bəyənib");
+                        if (data.is_like) {
+                            $like_btn.removeClass("far");
+                            $like_btn.addClass("fas");
+                        } else {
+                            $like_btn.removeClass("fas");
+                            $like_btn.addClass("far");
+                        }
+                    }
+                })
+            }).on("click", "#message-hide-btn", function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                var $url = $this.attr("href");
+                var $card_header = $this.closest(".card-header").find(".hide-status-div");
+                $.ajax({
+                    url: $url,
+                    success: function (data) {
+                        if (data.is_hide) {
+                            $this.html("Göstər");
+                            $card_header.html(data.html);
+                        } else {
+                            $this.html("Gizlə");
+                            $card_header.html("");
+                        }
+                    }
+                })
+            })
+        })
+    </script>
+{% endblock %}
+
+{% block title %}
+    {{ on_profile_user.userprofile.get_name_for_screen }}
+{% endblock %}
+
+{% block bottom_div %}
+    {% for msg in message %}
+        <div class="col-12 gedf-main">
+            {% if not msg.is_secret %}
+                {% include 'main-templates/user/include/single-message-view.html' %}
+            {% elif request.user == msg.sender or request.user == msg.receiver %}
+                {% include 'main-templates/user/include/single-message-view.html' %}
+            {% endif %}
+        </div>
+    {% empty %}
+        <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">Təəssüf!</h4>
+            <p>Hələ ki mesajınız yoxdur.
+                linkinizi dostlarınızla paylaşa və gələcək mesajlardan ləzzət ala bilərsiniz <i
+                        class="far fa-smile"></i>
+            </p>
+            <hr>
+            <p class="mb-0"><i class="far fa-copy"></i> &nbsp; <a
+                    href="http://127.0.0.1:8000/{{ request.user.username }}/">http://127.0.0.1:8000/{{ request.user.username }}/</a>
+            </p>
+        </div>
+    {% endfor %}
+{% endblock %}

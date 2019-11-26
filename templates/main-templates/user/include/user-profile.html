@@ -1,0 +1,14 @@
+<div class="card wrap">
+    <div class="card-body">
+        <div class="row text-center justify-content-center">
+            <div class="col-lg-8 col-sm-10">
+                <img src="{{ on_profile_user.userprofile.get_userprofile_photo }}"
+                     class="rounded-circle img-responsive blockico user-profile-img" alt="Profil Img">
+                <h3 class="m-3" style="font-family: g-font,sans-serif">{{ on_profile_user.userprofile.get_name_for_screen }}</h3>
+                <h5 class="my-color"><i class="fas fa-heart"></i> {{ user_like }} &emsp;</h5>
+                <small><i class="far fa-clock"></i> {{ on_profile_user.date_joined|timesince }}</small><br>
+                <h6 class="my-color" style="font-family: g-perma, sans-serif">{{ on_profile_user.userprofile.bio }}</h6>
+            </div>
+        </div>
+    </div>
+</div>

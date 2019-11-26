@@ -1,0 +1,22 @@
+{% extends 'main-templates/user/user-profile-base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    Parametrlər
+{% endblock %}
+
+{% block bottom_div %}
+    <div class="col-8 mb-5 card p-4">
+        <form action="#" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <div class="row justify-content-center">
+                <a href="{% url 'password' %}" class="btn-my-custom btn-my-sm">Şifrəni dəyiş</a>
+                <input type="submit" class="btn-my-custom float-right btn-my-sm" value="Dəyişiklikləri yadda saxla">
+            </div>
+        </form>
+
+    </div>
+
+
+{% endblock %}

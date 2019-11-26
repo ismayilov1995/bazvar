@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head_content %}
+{% endblock %}
+
+{% block body_content %}
+    <div class="col-12" id="main-container">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                {% include 'main-templates/user/include/user-profile.html' %}
+            </div>
+            <div class="col-12">
+                <ul class="nav nav-pills nav-fill">
+                    {% if on_profile_user == request.user %}
+                        <li class="nav-item pill-1">
+                            <a class="nav-link {% if page == "messages" %} active {% endif %}" id="nav-messages-btn"
+                               href="{% url 'userprofile' on_profile_user %}">Mesajlar</a>
+                        </li>
+                        <li class="nav-item pill-1">
+                            <a class="nav-link {% if page == "settings" %} active {% endif %}" id="nav-settings-btn"
+                               href="{% url 'settings' request.user.username %}">Parametrlər</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item pill-1">
+                            <a class="nav-link {% if page == "messages" %} active {% endif %}" id="nav-messages-btn"
+                               href="{% url 'message-view' on_profile_user %}">Mesaj Göndər</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            {% block bottom_div %}
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}
+

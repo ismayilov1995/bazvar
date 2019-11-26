@@ -1,0 +1,41 @@
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: rgba(10,10,21,0.8);">
+    <a class="navbar-brand" style="font-family: logo-font,sans-serif" href="{% url 'welcome' %}">
+        <img src="/media/default/logo-nav.png" height="30" class="d-inline-block align-top"
+             alt="">
+        bazvar
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    {% if request.user.username %}
+                        {{ request.user.userprofile.get_name_for_screen }}
+                    {% else %}
+                        Daxil ol
+                    {% endif %}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    {% if request.user.is_anonymous %}
+                        <a class="dropdown-item" href="{% url 'login' %}">Daxil ol</a>
+                        <a class="dropdown-item" href="{% url 'register' %}">Qeydiyyatdan keç</a>
+                    {% else %}
+                        <a class="dropdown-item" href="{% url 'userprofile' request.user.username %}">Profil</a>
+                        <a class="dropdown-item" href="{% url 'settings' request.user.username %}">Parametrlər</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'logout' %}">Hesabdan Çıx</a>
+                    {% endif %}
+                </div>
+            </li>
+        </ul>
+        <form action="{% url 'search' %}" method="get" class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" name="search" type="search" placeholder="Axtar" aria-label="Axtar">
+            <button class="btn btn-light my-2 my-sm-0" type="submit">Axtar</button>
+        </form>
+    </div>
+</nav>

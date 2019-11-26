@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    {{ on_profile_user.userprofile.get_name_for_screen }}
+{% endblock %}
+
+{% block head_content %}
+    <script type="text/javascript" rel="script">
+        $(document).ready(function () {
+            var $window = $(this);
+            $window.on("submit", "#message-form", function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                var $data = $this.serialize();
+                var $url = $this.attr("action");
+                $.ajax({
+                    url: $url,
+                    type: "post",
+                    dataType: "json",
+                    data: $data,
+                    success: function (data) {
+                        $this.find("#id_content").val("");
+                        $(location).attr("href", data.redirecturl);
+                    }
+                })
+            })
+        })
+    </script>
+{% endblock %}
+
+{% block body_content %}
+    <div class="row justify-content-center">
+        <div class="col-10">
+            <div class="card wrap" style="border-radius: 8px;">
+                <div class="card-body">
+                    <div class="row text-center justify-content-center">
+                        <div class="col-11">
+                            <img src="{{ on_profile_user.userprofile.get_userprofile_photo }}"
+                                 class="rounded-circle img-responsive user-message-img" style="margin-top: -40px;"
+                                 alt="Cinque Terre">
+                            <h4 class="m-3">{{ on_profile_user.userprofile.get_name_for_screen }}</h4>
+
+                            <form action="{% url 'add-message-view' on_profile_user.username on_profile_user.pk 'user' %}"
+                                  id="message-form">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    {{ form|crispy }}
+                                    {% if not is_anonymous %}
+                                        <div class="custom-control custom-checkbox m-3">
+                                            <input type="checkbox" class="custom-control-input" id="customCheck"
+                                            name="customCheck">
+                                            <label class="custom-control-label" for="customCheck">Anonim göndər</label>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <button type="submit" id="btn-send-message" class="btn-my-custom"><i
+                                        class="fas fa-paper-plane"></i> Göndər
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

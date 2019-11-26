@@ -1,0 +1,134 @@
+html {
+    background: url("/media/default/main-bg.png") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+body {
+    background-color: transparent !important;
+}
+
+.gedf-wrapper {
+    margin-top: 1.5rem;
+}
+
+@media (min-width: 992px) {
+    .gedf-main {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+
+    .gedf-card {
+        margin-bottom: 1.5rem;
+    }
+}
+
+.container {
+    margin-top: 150px;
+}
+
+.user-profile-img {
+    height: 200px;
+    width: 200px;
+}
+
+.user-message-img {
+    height: 70px;
+    width: 70px;
+}
+
+.nav-pills .pill-1 .nav-link:not(.active) {
+    background-color: rgba(83, 84, 70, 0.77);
+    color: white;
+    margin: 10px;
+}
+
+/* active (faded) */
+.nav-pills .pill-1 .nav-link {
+    background-color: rgb(212, 242, 249);
+    color: #272822;
+    margin: 10px;
+}
+
+.nav-pills .pill-1 .nav-link:hover {
+    background-color: rgb(180, 206, 212);
+    color: #272822;
+}
+
+.list-group .list-group-item:hover {
+    background-color: rgba(10, 18, 27, 0.56);
+    color: white;
+}
+
+.my-color {
+    color: rgb(10, 18, 27);
+}
+
+.btn-my-custom {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 12px;
+    padding-right: 12px;
+    border-radius: 8px;
+    background-color: rgb(22, 44, 64);
+    color: white;
+    border-style: solid;
+    border-color: white;
+    border-width: 1px;
+}
+
+.btn-my-custom:hover {
+    border-radius: 8px;
+    text-decoration: none;
+    border-style: solid;
+    border-color: rgb(22, 44, 64);
+    border-width: 1px;
+    background-color: white;
+    color: rgb(22, 44, 64);
+}
+
+.btn-my-sm{
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.wrap {
+    border-radius: 30px;
+    background-color: rgba(238, 238, 238, 0.87);
+}
+
+.blockico {
+    background: #0a121b; /* added just for demonstration purposes */
+    margin-top: -90px; /* and push the image up a bit */
+}
+
+/* Font awesome color */
+
+a{
+    color: #0a121b;
+}
+a:hover{
+    color: #455156;
+}
+
+/* Fontlar */
+
+@font-face {
+    font-family: 'logo-font';
+    src: url('/static/font/SulphurPoint-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'g-font';
+    src: url('/static/font/Alatsi-Regular.ttf');
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: 'g-muli';
+    src: url('/static/font/Muli-Regular.ttf');
+}

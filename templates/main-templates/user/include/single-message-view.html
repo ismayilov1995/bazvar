@@ -1,0 +1,68 @@
+{% load like_system %}
+<div class="card gedf-card mb-3" id="single-msg-div">
+    <div class="card-header">
+        <div class="row">
+            <div class="d-flex col">
+                <div class="mr-2">
+                    <img class="rounded-circle" width="45" height="45"
+                         src="{{ msg.sender.userprofile.get_userprofile_photo }}"
+                         alt="">
+                </div>
+                <div class="ml-2">
+                    <div class="h5 m-0">{{ msg.sender.userprofile.get_name_for_screen }}</div>
+                    <div class="h7 text-muted">{{ msg.sender }}</div>
+                </div>
+            </div>
+            <div class="hide-status-div col-auto">
+                {% if msg.is_secret %}
+                    <h5><span class="badge badge-secondary">Gizlədilib</span></h5>
+                {% endif %}
+            </div>
+            <div class="col-auto">
+                {% if on_profile_user == request.user %}
+                    <div class="dropdown show">
+                        <a href="#" role="button" id="dropdownMenuLink"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bars"></i>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" id="message-hide-btn" href="{% url 'hide-message' msg.pk %}">
+                                {% if msg.is_secret %}Göstər{% else %}Gizlə{% endif %}</a>
+                            <a id="message-remove-btn" value="{{ msg.pk }}" receiver="{{ msg.receiver }}"
+                               class="dropdown-item" href="{% url 'remove-message' %}">Sil</a>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <small class="text-muted float-right"><i class="far fa-clock"></i> {{ msg.message_date|timesince }}</small>
+        <p class="card-text">
+            {{ msg.content }}
+        </p>
+    </div>
+    {% if not request.user.is_anonymous %}
+        <div class="card-footer">
+            <a class="like-btn card-link" href="{% url 'like-message' msg.pk %}">
+                {% if msg.pk|is_liked:request.user %}
+                    <i class="like-icon fa fa-thumbs-up"></i>
+                {% else %}
+                    <i class="like-icon far fa-thumbs-up"></i>
+                {% endif %} Bəyən</a>
+            {% if request.user == msg.sender or request.user == msg.receiver %}
+                <a class="card-link" href="{% url 'reply-message' %}" id="reply-btn" msg_pk="{{ msg.pk }}"><i
+                        class="fa fa-comment"></i> Cavabla</a>
+            {% endif %}
+            <small class="text-info float-right">{% if msg.get_liked_msg_count > 0 %}
+                {{ msg.get_liked_msg_count }} -nəfər bəyənib
+            {% endif %}</small>
+        </div>
+    {% endif %}
+    <div class="col-12" id="reply-messages-div">
+        {% if msg.has_child %}
+            {% include 'main-templates/user/include/single-reply-view.html' %}
+        {% endif %}
+    </div>
+    <div class="col-12" id="message-reply-div">
+    </div>
+</div>

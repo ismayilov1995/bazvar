@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block body_content %}
+    <div class="jumbotron">
+        <h3 class="display-4">Axtarış nəticələri</h3>
+        <hr>
+        <div class="row justify-content-center">
+            <div class="list-group col-8">
+                {% for username in result %}
+                    <a href="{% url 'userprofile' username %}" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <div class="col-auto pl-0">
+                            <img class="rounded-circle"
+                                                                    style="height: 45px; width: 45px;"
+                                                                    src="{{ username.userprofile.get_userprofile_photo }}"
+                                                                    alt="">
+                            </div>
+                            <div class="col float-left align-self-center">
+                                <h5>{{ username.userprofile.get_name_for_screen }}</h5>
+                            </div>
+                            <div class="col pr-0">
+                                <small class="float-right"><i class="far fa-clock"></i> {{ username.date_joined|timesince }}</small>
+                            </div>
+                        </div>
+                    </a>
+                {% empty %}
+                    <div class="text-center mt-4 mb-0">
+                        <i class="far fa-4x fa-flushed"></i>
+                        <h3 class="mt-4"><b>{{ search }} adında istifadəçi tapılmadı</b></h3>
+                    </div>
+
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

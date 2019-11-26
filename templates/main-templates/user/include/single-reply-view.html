@@ -1,0 +1,27 @@
+<div class="row justify-content-center">
+    <ul class="col-12 media-list" id="single-ul-submessage">
+        <li class="card mt-2 pt-3">
+            {% for msg in msg.get_reply_messages %}
+                <div class="pl-3">
+                    <div class="row">
+                        <div class="col-auto">
+                            <a href="#" class="pull-left"> <img class="rounded-circle"
+                                                                style="height: 45px; width: 45px;"
+                                                                src="{{ msg.sender.userprofile.get_userprofile_photo }}"
+                                                                alt="">
+                            </a>
+                        </div>
+                        <div class="col">
+           <span class="text-muted">
+            <strong class="text-success">{{ msg.sender.userprofile.get_name_for_screen }}</strong>
+            <small class="text-muted"><i class="far fa-clock"></i> {{ msg.message_date|timesince }}</small>
+            </span>
+                            <p>{{ msg.content }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </li>
+    </ul>
+</div>
+

@@ -1,0 +1,18 @@
+<script type="text/javascript" rel="script">
+    $(document).ready(function () {
+        $("#welcome-main-div").on("click", "#btn-login", function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var main_div = $("#welcome-page-div");
+            $.ajax({
+                url: {% url 'login' %},
+                success: function (data) {
+                    main_div.html(data.html);
+                }
+            })
+
+        })
+
+    })
+
+</script>

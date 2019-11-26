@@ -1,0 +1,10 @@
+<hr>
+<form action="{% url 'add-message-view' message.receiver message.pk 'message' %}" method="post" id="reply-form">
+    {% csrf_token %}
+    <label class="col-12">
+        {% for field in form %}
+            {{ field }}
+        {% endfor %}
+        <button class="btn-my-custom btn-my-sm float-right mt-2" type="submit">Cavabla</button>
+    </label>
+</form>

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head_content %}
+    <link rel="stylesheet" type="text/css" href="{% static 'general/login.css' %}">
+{% endblock %}
+
+{% block body_content %}
+    <div class="col-12" id="welcome-main-div">
+        <div class="col-12" id="welcome-page-div">
+            {% if page == 'welcome' %}
+                {% include 'main-templates/user/welcome.html' %}
+            {% else %}
+                {% include 'main-templates/user/auth.html' %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
